@@ -48,6 +48,17 @@ export class ElasticsearchService implements OnModuleInit {
             tags: { type: 'keyword' },
             createdAt: { type: 'date' },
             updatedAt: { type: 'date' },
+
+            ai_state: { type: 'keyword' },
+            ai_confidence: { type: 'float' },
+            sentiment: { type: 'keyword' },
+            solution: { type: 'text' },
+            embedding: {
+              type: 'dense_vector',
+              dims: 1536,
+              index: true,
+              similarity: 'cosine',
+            },
           },
         },
       });

@@ -17,7 +17,8 @@ export class TicketsService {
       ticketId,
       title: createTicketDto.title,
       description: createTicketDto.description,
-      status: 'open', // Default status
+      status: 'NEW', // Default status
+      ai_state: 'RAW',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
