@@ -10,20 +10,26 @@ export class TicketsService {
 
   async createTicket(createTicketDto: CreateTicketDto) {
     const client = this.elasticsearchService.getClient();
-
     const ticketId = `TICKET-${Date.now()}`;
 
     const ticket = {
       ticketId,
       title: createTicketDto.title,
       description: createTicketDto.description,
-      status: 'NEW', // Default status
+      description_embedding: createTicketDto.description,
+      status: 'NEW',
       ai_state: 'RAW',
+      category: null,
+      priority: null,
+      assignedTo: null,
+      tags: [],
+      sentiment: null,
+      ai_confidence: null,
+      solution: null,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
-    // Insert the ticket into Elasticsearch
     const result = await client.index({
       index: this.indexName,
       document: ticket,
@@ -32,18 +38,15 @@ export class TicketsService {
     return {
       ticketId,
       _id: result._id,
-      status: 'created',
     };
   }
 
   async getTicket(id: string) {
     const client = this.elasticsearchService.getClient();
-
     const result = await client.get({
       index: this.indexName,
       id: id,
     });
-
     return result._source;
   }
 }
