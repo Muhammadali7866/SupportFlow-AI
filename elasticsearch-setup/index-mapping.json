@@ -1,0 +1,16 @@
+{
+  "mappings": {
+    "properties": {
+      "ticketId": { "type": "keyword" },
+      "title": { "type": "text" },
+      "description": { "type": "text" },
+      "status": { "type": "keyword" },
+      "priority": { "type": "keyword" },
+      "category": { "type": "keyword" },
+      "sentiment": { "type": "keyword" },
+      "resolution_summary": { "type": "text" },
+      "suggested_steps": { "type": "text" },
+      "createdAt": { "type": "date" }
+    }
+  }
+}

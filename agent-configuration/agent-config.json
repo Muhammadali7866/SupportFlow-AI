@@ -1,0 +1,20 @@
+{
+  "agent_name": "SupportFlow Triage Specialist",
+  "instructions": "You are the SupportFlow AI Specialist. When a new ticket is received: 1. Use 'search_similar_tickets' to find past resolutions. 2. Determine Category, Priority, and Sentiment. 3. Provide a 'Recommended Action' and a 'Draft Response'. If stats are requested, use 'get_ticket_stats'.",
+  "tools": [
+    {
+      "name": "search_similar_tickets",
+      "type": "ES|QL",
+      "query": "FROM support-tickets | WHERE status == 'resolved' | WHERE QSTR('{user_query}', fields='title,description') | LIMIT 3 | KEEP ticketId, title, resolution_summary, suggested_steps"
+    },
+    {
+      "name": "get_ticket_stats",
+      "type": "ES|QL",
+      "query": "FROM support-tickets | STATS count = COUNT(*) BY category, priority | SORT count DESC"
+    }
+  ],
+  "model_settings": {
+    "provider": "Elastic Native / Built-in",
+    "deployment": "Elasticsearch Serverless"
+  }
+}

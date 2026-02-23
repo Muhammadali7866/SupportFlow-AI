@@ -1,0 +1,13 @@
+-- TOOL 1: search_similar_tickets
+-- Purpose: Finds resolved tickets that match the current problem description.
+FROM support-tickets
+| WHERE status == "resolved"
+| WHERE QSTR("{user_query}", fields="title,description")
+| LIMIT 3
+| KEEP ticketId, title, resolution_summary, suggested_steps
+
+-- TOOL 2: get_ticket_stats
+-- Purpose: Provides an executive summary of ticket volume by category and priority.
+FROM support-tickets
+| STATS count = COUNT(*) BY category, priority
+| SORT count DESC
